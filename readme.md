@@ -1,9 +1,6 @@
-
-
-
 # NCLI R1
 
-NodeSass CLI (NCLI) assists developers with managing multiple Node.js packages in an application ecosystem.  With NCLI, you can readily call scripts and manage configurations.
+nodeclient (NCLI) assists developers with managing multiple Node.js packages in an application ecosystem.  With NCLI, you can readily call scripts and manage configurations.
 
 
 ## Rationale
@@ -190,7 +187,7 @@ If you need the contents of each file across packages, use `getFileContents`.  T
 
 
 ```
- require('ncli').getFileContents('logs');. // all function files contents, keyed by filename.
+ require('ncli').getFileContents('logs'); // all function files contents, keyed by filename.
 ```
 
 
@@ -204,7 +201,7 @@ If you need to require each file contained within a package folder, use `require
 
 ```
  require('ncli').requireFiles('api', (file, pkg, code, exports) => {
-});.//.require every function, and run callback on each require.
+}); // require every function, and run callback on each require.
 ```
 
 
@@ -217,7 +214,7 @@ If you want to read JSON files stored across packages, use `getJSON`.  This util
 
 
 ```
- require('ncli').getJSON('configs');.//.returns JSON from functions folders, keyed by filename and overwritten/inherited by top-most package via Object.assign.
+ require('ncli').getJSON('configs'); // returns JSON from functions folders, keyed by filename and overwritten/inherited by top-most package via Object.assign.
 ```
 
 
@@ -231,19 +228,14 @@ If you want to read JSON files stored across packages, use `getJSON`.  This util
 
 Lerna: [https://github.com/lerna/lerna](https://github.com/lerna/lerna)
 
-  
+<img src="https://lh5.googleusercontent.com/V3T0_6uDoa0DkHYaPwgYceE_OTZDB_ZR_4evW-8Lg0iqfhqrME42EMmBXofWmhwg1S69MXd8iPwiV7denREUVnyPqv-eWaEiI0Tyu3ZxcLYkNEqRoC1i1WnUCE346cGqQo6cGruA" width="150" />
 
-![](https://lh5.googleusercontent.com/V3T0_6uDoa0DkHYaPwgYceE_OTZDB_ZR_4evW-8Lg0iqfhqrME42EMmBXofWmhwg1S69MXd8iPwiV7denREUVnyPqv-eWaEiI0Tyu3ZxcLYkNEqRoC1i1WnUCE346cGqQo6cGruA =150x)
-
-  
 
 ### Task Management
 
 Grunt: [https://github.com/lerna/lerna](https://github.com/lerna/lerna)
 
-![](https://lh3.googleusercontent.com/qL-puUnz9OYNIdKYzrHHNJpd1lQYNb003cc02Fu6hUxPHgo27DoTcBWKX-sgBbfMcsuHpHKO06mCY8FMxHIfaJ8yS1Ix9i64WjFD1yRT-rHGg1tNOpH4FjeQiZX42YMMfwOfggfC =150x)
-
-  
+<img src="https://lh3.googleusercontent.com/qL-puUnz9OYNIdKYzrHHNJpd1lQYNb003cc02Fu6hUxPHgo27DoTcBWKX-sgBbfMcsuHpHKO06mCY8FMxHIfaJ8yS1Ix9i64WjFD1yRT-rHGg1tNOpH4FjeQiZX42YMMfwOfggfC" width="150" />
 
 npm-run-all: [https://github.com/mysticatea/npm-run-all](https://github.com/mysticatea/npm-run-all)
 
@@ -251,8 +243,6 @@ npm-run-all: [https://github.com/mysticatea/npm-run-all](https://github.com/myst
 
 Mozilla Convict: [https://github.com/mozilla/node-convict](https://github.com/mozilla/node-convict)
 
-![](https://lh3.googleusercontent.com/XVvMJlFRJxanTo4BIN0wRPucw64mpmcEqW5TW-i4ojKH1r60oFnTIA690E3kf7D4tC-p6LkH38UeJmIzT2ainRbTEbA6fDboJPZBG5hLLKx7iBU5IOy56Wiu1ILe5qQxvnN3Z4uh =150x)
-
-  
+<img src="https://lh3.googleusercontent.com/XVvMJlFRJxanTo4BIN0wRPucw64mpmcEqW5TW-i4ojKH1r60oFnTIA690E3kf7D4tC-p6LkH38UeJmIzT2ainRbTEbA6fDboJPZBG5hLLKx7iBU5IOy56Wiu1ILe5qQxvnN3Z4uh" width="150" />
 
 node-config-manager: [https://www.npmjs.com/package/node-config-manager](https://www.npmjs.com/package/node-config-manager)
