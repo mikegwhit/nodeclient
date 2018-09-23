@@ -1,0 +1,37 @@
+{
+  "name": "ncli-core-console",
+  "friendlyName": "Console 📃",
+  "version": "0.1.0",
+  "description": "Simplified console reporting for large projects",
+  "keywords": [],
+  "homepage": "http://saasworks.io",
+  "author": {
+    "name": "Mike Whit",
+    "email": "mike@saasworks.io",
+    "url": "http://mikewhit.com"
+  },
+  "dependencies": {
+    "chalk": "^2.3.2",
+    "stack-trace": "0.0.9",
+    "wildstring": "^1.0.9",
+    "winston": "^2.3.1",
+    "ncli-core-cache": "../cache",
+    "ncli-core-configs": "../configs",
+    "ncli-core-files": "../files",
+    "ncli-core-helpers": "../helpers",
+    "ncli-core-logger": "file:../logger"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.16.0",
+    "coveralls": "~2.11.8",
+    "eslint": "~3.13.*",
+    "istanbul": "~0.4.2",
+    "jasmine": "^2.5.2",
+    "jsdoc": "~3.4.0",
+    "rimraf": "~2.5.2"
+  },
+  "scripts": {
+    "run-testserver": "node node_modules/tests/test.server.js",
+    "run-tests": "node node_modules/tests/index.js"
+  }
+}

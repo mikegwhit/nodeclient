@@ -1,0 +1,11 @@
+{
+    "name": "ncli-core-logger",
+    "version": "0.1.0",
+    "dependencies": {
+        "jasmine": "^2.8.0",
+        "winston": "^2.4.0",
+        "ncli-core-configs": "file:../configs",
+        "ncli-core-files": "file:../files",
+        "ncli-core-helpers": "file:../helpers"
+    }
+}

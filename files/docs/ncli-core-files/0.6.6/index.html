@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>NodeClient Index</title>
+
+	<!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.default.css">
+
+	<link type="text/css" rel="stylesheet" href="styles/site.simplex.css">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top ">
+<div class="container">
+	<div class="navbar-header">
+		<a class="navbar-brand" href="index.html"><img class="branding-logo" src="../../../media/logo.png"
+		alt="logo"/>NodeClient</a>
+		<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#topNavigation">
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+        </button>
+	</div>
+	<div class="navbar-collapse collapse" id="topNavigation">
+		<ul class="nav navbar-nav">
+			
+			<li class="dropdown">
+				<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="FileHelpers.html">FileHelpers</a></li><li><a href="Files.html">Files</a></li><li><a href="FileScanner.html">FileScanner</a></li>
+				</ul>
+			</li>
+			
+		</ul>
+        
+            <div class="col-sm-3 col-md-3">
+                <form class="navbar-form" role="search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search" name="q" id="search-input">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" id="search-submit"><i class="glyphicon glyphicon-search"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        
+	</div>
+
+</div>
+</div>
+
+
+<div class="container" id="toc-content">
+<div class="row">
+
+	
+	<div class="col-md-8">
+	
+		<div id="main">
+			
+
+	
+	
+
+
+
+    <h3>ncli-core-files 0.6.6</h3>
+
+
+
+
+
+
+
+
+
+	
+	
+
+
+
+
+
+    <section class="readme-section">
+        <article><h1>Files</h1><p>Recursive filename retrieval using the <code>node_modules</code> filesystem.  Includes FileWriter and utility functions.  Files are delivered first from <code>node_modules</code>, then from subfolder packages, then from the executing package.</p>
+<h2>Example Usage</h2><p>Use <code>require('ncli-core-files').readFiles(fromFolder);</code> to retrieve an array listing of files in the <code>fromFolder</code> subfolder.  Reads occur in the executing package, subpackages of the executing package and the <code>node_modules</code> diretory.</p>
+<h2><code>require('ncli-core-files')</code> behavior</h2><p>Exports a Files class instantiation.</p>
+<h2>Dependencies</h2><table>
+    <tr>
+        <td>Name</td>
+        <td>Description</td>
+    </tr>
+    <tr>
+        <td><strong>chalk</strong></td>
+        <td>Creates pretty error messages.</td>
+    </tr>
+    <tr>
+        <td><strong>fs-extra</strong></td>
+        <td>Moves files.</td>
+    </tr>
+    <tr>
+        <td><strong>rimraf</strong></td>
+        <td>Removes directories and subdirectories in one call.</td>
+    </tr>
+    <tr>
+        <td><strong>stack-trace</strong></td>
+        <td>Gets filename of currently executing function's caller.</td>
+    </tr>
+</table>
+
+<h2>File Contexts</h2><p>There are five file contexts.</p>
+<table>
+    <tr>
+        <td>Name</td>
+        <td>Description</td>
+        <td>Example</td>
+    </tr>
+    <tr>
+        <td>Local</td>
+        <td>The filesystem relative to which file was called when executing 
+            Node.</td>
+        <td>
+        <em> <code>node index.js</code>
+        </td>
+    </tr>
+    <tr>
+        <td>Script</td>
+        <td>The filesystem relevant to the first non-<code>node_modules</code> folder with
+            a <code>package.json</code> the executing script.</td>
+        <td>
+        </em> <code>node_modules/bin/foobar</code>
+        </td>
+    </tr>
+    <tr>
+        <td>Global Script</td>
+        <td>The filesystem relevant to the first non-<code>node_modules</code> folder with
+            a <code>package.json</code> relative to the current working directory 
+            associated with the Node process.</td>
+        <td>
+        <em> /usr/local/lib/foobar
+        </em> %AppData%/npm/foobar
+        </td>
+    </tr>
+    <tr>
+        <td>node_modules Package</td>
+        <td>The filesystem relevant to a package relative to the currently
+            executing file.  Looked up by package name as defined by folder
+            name directly in <code>node_modules</code> folder.</td>
+        <td>
+        <em> <code>node_modules/foo/bar.js</code>
+        </td>
+    </tr>
+    <tr>
+        <td>Local Package</td>
+        <td>The filesystem relevant to a package relative to the currently
+            executing file.  Looked up by package name as defined by name field
+            in <code>package.json</code> file.  Requires a local file scan of 
+            packages.</td>
+        <td>
+        </em> <code>foo/bar.txt</code>
+        * <code>foo/package.json</code>
+        </td>
+    </tr>
+</table>
+
+<h2>FileHelpers Class</h2><p>Static container class.  Solves common use cases for interacting with a Node.js
+development filesystem.  Brings various dependencies into one place.</p>
+<ul>
+<li>Change directory to originally executed filepath.</li>
+<li>Get the most relevant <code>package.json</code> <strong>name</strong> field given a <strong>file</strong>.</li>
+<li>Get first folder not contained in a <code>node_modules</code> path if executing from a
+<code>node_modules</code> context.</li>
+<li>Given some filepath, find all package.json files not contained in a
+<code>node_modules</code> file tree.</li>
+<li>Resolve absolute file paths given a <strong>PackgeName</strong>/<strong>File</strong> format when local
+use and package use is desired.</li>
+</ul>
+<h2>FileScanner Class</h2><p>Provides file reading helperes for local and package contexts.  Additionally 
+provides interface for whitelisting and blacklisting packages.</p>
+<h2>FileWriter Class</h2><p>Provides file writing helpers for writing files to local and package contexts.<br>Writes files irrespective of file path existing (i.e. creates folders).<br>Manages temporary files (i.e. removes on process exit).  Moves files in bulk.</p>
+<p><br>
+<img src="../../../media/logo.png" width="250"/></p></article>
+    </section>
+
+
+
+
+
+
+
+		</div>
+	</div>
+
+	<div class="clearfix"></div>
+
+	
+		<div class="col-md-3">
+			<div id="toc" class="col-md-3 hidden-xs hidden-sm hidden-md"></div>
+		</div>
+	
+
+</div>
+</div>
+
+
+    <div class="modal fade" id="searchResults">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Search results</h4>
+          </div>
+          <div class="modal-body"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div>
+
+
+<footer>
+
+
+<span class="jsdoc-message">
+	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a>
+	
+		on 2018-09-23T00:53:59-06:00
+	
+	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
+</span>
+</footer>
+
+<script src="scripts/docstrap.lib.js"></script>
+<script src="scripts/toc.js"></script>
+
+    <script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
+
+
+<script>
+$( function () {
+	$( "[id*='$']" ).each( function () {
+		var $this = $( this );
+
+		$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
+	} );
+
+	$( ".tutorial-section pre, .readme-section pre, pre.prettyprint.source" ).each( function () {
+		var $this = $( this );
+
+		var example = $this.find( "code" );
+		exampleText = example.html();
+		var lang = /{@lang (.*?)}/.exec( exampleText );
+		if ( lang && lang[1] ) {
+			exampleText = exampleText.replace( lang[0], "" );
+			example.html( exampleText );
+			lang = lang[1];
+		} else {
+			var langClassMatch = example.parent()[0].className.match(/lang\-(\S+)/);
+			lang = langClassMatch ? langClassMatch[1] : "javascript";
+		}
+
+		if ( lang ) {
+
+			$this
+			.addClass( "sunlight-highlight-" + lang )
+			.addClass( "linenums" )
+			.html( example.html() );
+
+		}
+	} );
+
+	Sunlight.highlightAll( {
+		lineNumbers : false,
+		showMenu : true,
+		enableDoclinks : true
+	} );
+
+	$.catchAnchorLinks( {
+        navbarOffset: 10
+	} );
+	$( "#toc" ).toc( {
+		anchorName  : function ( i, heading, prefix ) {
+			return $( heading ).attr( "id" ) || ( prefix + i );
+		},
+		selectors   : "#toc-content h1,#toc-content h2,#toc-content h3,#toc-content h4",
+		showAndHide : false,
+		smoothScrolling: true
+	} );
+
+	$( "#main span[id^='toc']" ).addClass( "toc-shim" );
+	$( '.dropdown-toggle' ).dropdown();
+
+    $( "table" ).each( function () {
+      var $this = $( this );
+      $this.addClass('table');
+    } );
+
+} );
+</script>
+
+
+
+<!--Navigation and Symbol Display-->
+
+
+<!--Google Analytics-->
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            SearcherDisplay.init();
+        });
+    </script>
+
+
+</body>
+</html>

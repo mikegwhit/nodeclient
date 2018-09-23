@@ -1,0 +1,17 @@
+{
+    "expireTime": 864000000,
+    "folder": ".cache",
+    "folders": [
+        "api",
+        "configs",
+        "keys",
+        "scripts",
+        "signals",
+        "tests",
+        "timers",
+        "www"
+    ],
+    "inMemory": true,
+    "memoryThreshold": 5000000,
+    "persist": true
+}

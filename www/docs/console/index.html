@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>NodeClient Index</title>
+
+	<!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.default.css">
+
+	<link type="text/css" rel="stylesheet" href="styles/site.simplex.css">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top ">
+<div class="container">
+	<div class="navbar-header">
+		<a class="navbar-brand" href="index.html"><img class="branding-logo" src="../../../media/logo.png"
+		alt="logo"/>NodeClient</a>
+		<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#topNavigation">
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+        </button>
+	</div>
+	<div class="navbar-collapse collapse" id="topNavigation">
+		<ul class="nav navbar-nav">
+			
+			<li class="dropdown">
+				<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="Console.html">Console</a></li>
+				</ul>
+			</li>
+			
+		</ul>
+        
+            <div class="col-sm-3 col-md-3">
+                <form class="navbar-form" role="search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search" name="q" id="search-input">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" id="search-submit"><i class="glyphicon glyphicon-search"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        
+	</div>
+
+</div>
+</div>
+
+
+<div class="container" id="toc-content">
+<div class="row">
+
+	
+	<div class="col-md-8">
+	
+		<div id="main">
+			
+
+	
+	
+
+
+
+    <h3>ncli-core-console 0.1.0</h3>
+
+
+
+
+
+
+
+
+
+	
+	
+
+
+
+
+
+    <section class="readme-section">
+        <article><h1>Console</h1><p>Overrides the default console for prettier messages.  Messages are displayed
+with the following format: </p>
+<p><code style="background: #222; color #fff;">[<span style="color: rgb(100, 100, 255);">PackageName</span>] [<span style="color: red">Error</span>|<span style="color: rgb(50, 150, 255)">Info</span>|<span style="color: #888">Log</span>|<span style="color: yellow;">Warning</span>] Log Message.</code></p>
+<p>For example, an error message might look like this:</p>
+<p><code style="background: #222; color #fff;">[<span style="color: rgb(100, 100, 255);">ncli-server</span>] [<span style="color: red">Error</span>] User received 500 error.</code></p>
+<p>Console also enables whitelisting/blacklisting, log redirection, and console summaries.</p>
+<h2>Having Fun with Emoji</h2><p>With the introduction of unicode emoji, you can now write fun console and log messages!  Since NPM does not allow emoji in package names, you can add these emoji safely to your package name using the <code>friendlyName</code> key in your <code>package.json</code> file.</p>
+<p>See a full emoji list here: https://unicode.org/emoji/charts/full-emoji-list.html<br>Using the <code>friendlyName</code> field, all console messages occurring within the package will be printed using the <code>friendlyName</code> which can include emoji.</p>
+<h2>Configs</h2><table>
+    <tr>
+        <td>Name</td>
+        <td>Description</td>
+        <td>Default</td>
+    </tr>
+    <tr>
+        <td><strong>blacklist</strong></td>
+        <td>
+            Package names to blacklist from displaying console messages.  By default, squelched packages are redirected to logs.
+            Wildcards may be used to match multiple packages.
+        </td>
+        <td><code>[&quot;<em>&quot;]</code></td>
+    </tr>
+    <tr>
+        <td><strong>loggingMode</strong></td>
+        <td>
+            Either <code>file</code> or <code>package</code>.  Currently only supports package logging.
+        </td>
+        <td><code>package</code></td>
+    </tr>
+    <tr>
+        <td><strong>summary</strong></td>
+        <td>
+            Package names to summarize.  Wildcards may be used to match multiple packages.
+        </td>
+        <td><code>[&quot;</em>&quot;]</code></td>
+    </tr>
+    <tr>
+        <td><strong>summaryInterval</strong></td>
+        <td>
+            Package names to summarize.  Wildcards may be used to match multiple packages.
+        </td>
+        <td><code>30000</code></td>
+    </tr>
+    <tr>
+        <td><strong>thresholdCooldown</strong></td>
+        <td>
+            After throttling has occurred, number of milliseconds before a log count is decreased.
+        </td>
+        <td><code>150</code></td>
+    </tr>
+    <tr>
+        <td><strong>thresholdCount</strong></td>
+        <td>
+            The number of log messages to trigger throttling.<br>        </td>
+        <td><code>2</code></td>
+    </tr>
+    <tr>
+        <td><strong>whitelist</strong></td>
+        <td>
+            Package names on the whitelist are not subject to throttling.
+        </td>
+        <td><code>[]</code></td>
+    </tr>
+</table></article>
+    </section>
+
+
+
+
+
+
+
+		</div>
+	</div>
+
+	<div class="clearfix"></div>
+
+	
+		<div class="col-md-3">
+			<div id="toc" class="col-md-3 hidden-xs hidden-sm hidden-md"></div>
+		</div>
+	
+
+</div>
+</div>
+
+
+    <div class="modal fade" id="searchResults">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Search results</h4>
+          </div>
+          <div class="modal-body"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div>
+
+
+<footer>
+
+
+<span class="jsdoc-message">
+	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a>
+	
+		on 2018-09-23T00:52:11-06:00
+	
+	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
+</span>
+</footer>
+
+<script src="scripts/docstrap.lib.js"></script>
+<script src="scripts/toc.js"></script>
+
+    <script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
+
+
+<script>
+$( function () {
+	$( "[id*='$']" ).each( function () {
+		var $this = $( this );
+
+		$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
+	} );
+
+	$( ".tutorial-section pre, .readme-section pre, pre.prettyprint.source" ).each( function () {
+		var $this = $( this );
+
+		var example = $this.find( "code" );
+		exampleText = example.html();
+		var lang = /{@lang (.*?)}/.exec( exampleText );
+		if ( lang && lang[1] ) {
+			exampleText = exampleText.replace( lang[0], "" );
+			example.html( exampleText );
+			lang = lang[1];
+		} else {
+			var langClassMatch = example.parent()[0].className.match(/lang\-(\S+)/);
+			lang = langClassMatch ? langClassMatch[1] : "javascript";
+		}
+
+		if ( lang ) {
+
+			$this
+			.addClass( "sunlight-highlight-" + lang )
+			.addClass( "linenums" )
+			.html( example.html() );
+
+		}
+	} );
+
+	Sunlight.highlightAll( {
+		lineNumbers : false,
+		showMenu : true,
+		enableDoclinks : true
+	} );
+
+	$.catchAnchorLinks( {
+        navbarOffset: 10
+	} );
+	$( "#toc" ).toc( {
+		anchorName  : function ( i, heading, prefix ) {
+			return $( heading ).attr( "id" ) || ( prefix + i );
+		},
+		selectors   : "#toc-content h1,#toc-content h2,#toc-content h3,#toc-content h4",
+		showAndHide : false,
+		smoothScrolling: true
+	} );
+
+	$( "#main span[id^='toc']" ).addClass( "toc-shim" );
+	$( '.dropdown-toggle' ).dropdown();
+
+    $( "table" ).each( function () {
+      var $this = $( this );
+      $this.addClass('table');
+    } );
+
+} );
+</script>
+
+
+
+<!--Navigation and Symbol Display-->
+
+
+<!--Google Analytics-->
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            SearcherDisplay.init();
+        });
+    </script>
+
+
+</body>
+</html>
