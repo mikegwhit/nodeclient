@@ -149,10 +149,13 @@ Now you can require packages outside node_modules as though they are inside node
 
 
 ```
-📁 /mypackage
-    📄 foo.js
-📄 package.json
+📁 /packages
+    📁 /mypackage
+        📄 foo.js
+        📄 package.json
 📁 /node_modules
+    📁 /otherPackage
+        📄 package.json
 📄 bar.js
 📄 package.json
 
