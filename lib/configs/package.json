@@ -1,6 +1,6 @@
 {
   "name": "ncli-core-configs",
-  "version": "0.5.0",
+  "version": "0.9.4",
   "description": "Include JSON-based configuration files easily.",
   "keywords": [
     "configuration",

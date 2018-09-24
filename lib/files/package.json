@@ -1,7 +1,7 @@
 {
   "name": "ncli-core-files",
   "friendlyName": "Files 📂",
-  "version": "0.6.6",
+  "version": "0.9.6",
   "description": "Gets list of all files in all specified subdirectories of the node package system",
   "keywords": [
     "files",

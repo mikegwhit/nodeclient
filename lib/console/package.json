@@ -1,7 +1,7 @@
 {
   "name": "ncli-core-console",
   "friendlyName": "Console 📃",
-  "version": "0.1.0",
+  "version": "0.3.1",
   "description": "Simplified console reporting for large projects",
   "keywords": [],
   "homepage": "http://saasworks.io",

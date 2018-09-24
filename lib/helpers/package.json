@@ -1,7 +1,7 @@
 {
     "name": "ncli-core-helpers",
     "friendlyName": "Helpers ✊",
-    "version": "0.0.1",
+    "version": "0.3.1",
     "dependencies": {
         "chalk": "^2.4.1",
         "expect.js": "^0.3.1",

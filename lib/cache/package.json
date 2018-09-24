@@ -1,6 +1,6 @@
 {
     "name": "ncli-core-cache",
-    "version": "0.0.1",
+    "version": "0.2.1",
     "friendlyName": "Cache 🥪",
     "packages": {
         "ncli-core-configs": "../configs",
