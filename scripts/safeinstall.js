@@ -38,6 +38,9 @@ safeInstall(__dirname + '/../lib/scripts');
 const packageJSON = 
     JSON.parse(require('fs').readFileSync(__dirname + '/../package.json'));
 packageJSON['dependencies'] = packageJSON['localDependencies'];
+packageJSON['scripts'] = {
+    'postinstall': 'node scripts/postinstall.js'
+};
 require('fs').writeFileSync(__dirname + '/../package.json', 
     JSON.stringify(packageJSON, null, 2));
 safeInstall(__dirname + '/../');

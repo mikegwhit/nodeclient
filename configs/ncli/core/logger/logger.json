@@ -1,0 +1,26 @@
+{
+    "folder": ".logs",
+    "winston": {
+        "level": "info",
+        "label": "",
+        "silent": false,
+        "colorize": true,
+        "timestamp": true,
+        "filename": "",
+        "maxsize": "20000000",
+        "maxFiles": "1",
+        "json": true,
+        "eol": "\n",
+        "prettyPrint": true,
+        "depth": null,
+        "logstash": false,
+        "showLevel": true,
+        "formatter": null,
+        "tailable": true,
+        "maxRetries": 2,
+        "zippedArchive": true
+    },
+    "customWinston": {
+        
+    }
+}

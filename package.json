@@ -1,20 +1,53 @@
 {
-    "name": "nodeclient",
-    "version": "0.7.9",
-    "dependencies": {
-        "chalk": "^2.4.1"
-    },
-    "localDependencies": {
-        "ncli-core-cache": "file:lib/cache",
-        "ncli-core-configs": "file:lib/configs",
-        "ncli-core-console": "file:lib/console",
-        "ncli-core-files": "file:lib/files",
-        "ncli-core-helpers": "file:lib/helpers",
-        "ncli-core-logger": "file:lib/logger",
-        "ncli-core-rscandir": "file:lib/rscandir",
-        "ncli-core-scripts": "file:lib/scripts"
-    },
-    "scripts": {
-        "postinstall": "node scripts/safeinstall.js"
-    }
+  "name": "nodeclient",
+  "version": "0.7.9",
+  "dependencies": {
+    "chalk": "^2.3.0",
+    "jasmine": "^2.8.0",
+    "progress": "^2.0.0",
+    "deep-assign": "^2.0.0",
+    "stack-trace": "0.0.10",
+    "wildstring": "^1.0.8",
+    "winston": "^2.4.0",
+    "fs-extra": "^2.0.0",
+    "rimraf": "~2.5.2",
+    "expect.js": "^0.3.1",
+    "readline": "^1.3.0",
+    "minimatch": "^3.0.3",
+    "scandir": "^0.1.2",
+    "minimist": "^1.2.0"
+  },
+  "localDependencies": {
+    "ncli-core-cache": "file:lib/cache",
+    "ncli-core-configs": "file:lib/configs",
+    "ncli-core-console": "file:lib/console",
+    "ncli-core-files": "file:lib/files",
+    "ncli-core-helpers": "file:lib/helpers",
+    "ncli-core-logger": "file:lib/logger",
+    "ncli-core-rscandir": "file:lib/rscandir",
+    "ncli-core-scripts": "file:lib/scripts"
+  },
+  "scripts": {
+    "postinstall": "node scripts/safeinstall.js"
+  },
+  "flattenedDedpendencies": [
+    "ncli-core-rscandir",
+    "ncli-core-files",
+    "ncli-core-helpers",
+    "ncli-core-configs",
+    "ncli-core-cache",
+    "ncli-core-logger",
+    "ncli-core-console",
+    "ncli-core-scripts"
+  ],
+  "flattenedDependencies": [
+    "ncli-core-rscandir",
+    "ncli-core-files",
+    "ncli-core-helpers",
+    "ncli-core-configs",
+    "ncli-core-cache",
+    "ncli-core-logger",
+    "ncli-core-console",
+    "ncli-core-scripts"
+  ]
 }
