@@ -4,6 +4,16 @@
     "dependencies": {
         "chalk": "^2.4.1"
     },
+    "localDependencies": {
+        "ncli-core-cache": "lib/cache",
+        "ncli-core-configs": "lib/configs",
+        "ncli-core-console": "lib/console",
+        "ncli-core-files": "lib/files",
+        "ncli-core-helpers": "lib/helpers",
+        "ncli-core-logger": "lib/logger",
+        "ncli-core-rscandir": "lib/rscandir",
+        "ncli-core-scripts": "lib/scripts"
+    },
     "scripts": {
     }
 }
