@@ -22,7 +22,7 @@ const safeInstall = (dir) => {
     try {
         cp.execSync('npm i', {encoding: 'utf8', stdio: 'ignore'});
     } catch(e) {
-        console.log(chalk.red('Failure Occurred'), dir, e);
+        console.log(chalk.red('Failure Occurred'), dir);
     }
     console.log(chalk.green('Safely Installed'), dir);
     process.chdir(cwd);
@@ -37,10 +37,11 @@ safeInstall(__dirname + '/../lib/console');
 safeInstall(__dirname + '/../lib/scripts');
 const packageJSON = 
     JSON.parse(require('fs').readFileSync(__dirname + '/../package.json'));
-Object.assign(packageJSON['dependencies'], packageJSON['localDependencies']);
+packageJSON['dependencies'] = packageJSON['localDependencies'];
 packageJSON['scripts'] = {
     'postinstall': 'node scripts/postinstall.js'
 };
 require('fs').writeFileSync(__dirname + '/../package.json', 
     JSON.stringify(packageJSON, null, 2));
+safeInstall(__dirname + '/../');
 process.exit();

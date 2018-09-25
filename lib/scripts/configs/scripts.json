@@ -1,4 +1,0 @@
-{
-    "ignoreNodeModules": true,
-    "root": "${cwd}/../"
-}

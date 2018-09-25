@@ -6,7 +6,6 @@ require(__dirname + '/../../index.js');
  * https://github.com/npm/npm/issues/19821
  */
 const chalk = require('chalk');
-
 const binSrc = `#!/bin/sh
 basedir=$(dirname "$(echo "$0" | sed -e 's,\\\\,/,g')")
 
