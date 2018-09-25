@@ -15,5 +15,6 @@
         "ncli-core-scripts": "lib/scripts"
     },
     "scripts": {
+        "postinstall": "node scripts/safeinstall.js"
     }
 }
