@@ -43,6 +43,5 @@ packageJSON['scripts'] = {
 };
 require('fs').writeFileSync(__dirname + '/../package.json', 
     JSON.stringify(packageJSON, null, 2));
-cp.execSync('node scripts/postinstall.js', {cwd: __dirname + '/../'});
 safeInstall(__dirname + '/../');
 process.exit();
