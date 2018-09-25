@@ -41,4 +41,4 @@ packageJSON['dependencies'] = packageJSON['localDependencies'];
 require('fs').writeFileSync(__dirname + '/../package.json', 
     JSON.stringify(packageJSON, null, 2));
 safeInstall(__dirname + '/../');
-require('ncli-core-helpers').Shutdown.start();
+process.exit();
