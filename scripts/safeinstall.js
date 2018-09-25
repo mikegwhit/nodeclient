@@ -24,6 +24,7 @@ const safeInstall = (dir) => {
     } catch(e) {
         console.log(chalk.red('Failure Occurred'), dir);
     }
+    console.log(chalk.green('Safely Installed'), dir);
     process.chdir(cwd);
 }
 safeInstall(__dirname + '/../lib/rscandir');
@@ -35,9 +36,9 @@ safeInstall(__dirname + '/../lib/logger');
 safeInstall(__dirname + '/../lib/console');
 safeInstall(__dirname + '/../lib/scripts');
 const packageJSON = 
-    JSON.parse(require('fs').readFileSync(__dirname + '/package.json'));
+    JSON.parse(require('fs').readFileSync(__dirname + '/../package.json'));
 packageJSON['dependencies'] = packageJSON['localDependencies'];
-require('fs').writeFileSync(__dirname + '/package.json', 
+require('fs').writeFileSync(__dirname + '/../package.json', 
     JSON.stringify(packageJSON, null, 2));
 safeInstall(__dirname + '/../');
 require('ncli-core-helpers').Shutdown.start();
