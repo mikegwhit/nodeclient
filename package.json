@@ -3,14 +3,14 @@
     "version": "0.7.9",
     "dependencies": {
         "chalk": "^2.4.1",
-        "ncli-core-cache": "file:./lib/cache",
-        "ncli-core-configs": "file:lib/configs",
-        "ncli-core-console": "file:lib/console",
-        "ncli-core-files": "file:lib/files",
-        "ncli-core-helpers": "file:lib/helpers",
-        "ncli-core-logger": "file:lib/logger",
-        "ncli-core-rscandir": "file:lib/rscandir",
-        "ncli-core-scripts": "file:lib/scripts"
+        "ncli-core-cache": "lib/cache",
+        "ncli-core-configs": "lib/configs",
+        "ncli-core-console": "lib/console",
+        "ncli-core-files": "lib/files",
+        "ncli-core-helpers": "lib/helpers",
+        "ncli-core-logger": "lib/logger",
+        "ncli-core-rscandir": "lib/rscandir",
+        "ncli-core-scripts": "lib/scripts"
     },
     "scripts": {
         "postinstall": "npm i -g lib/scripts"
