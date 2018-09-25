@@ -3,7 +3,7 @@
     "version": "0.7.9",
     "dependencies": {
         "chalk": "^2.4.1",
-        "ncli-core-cache": "file:lib/cache",
+        "ncli-core-cache": "file:./lib/cache",
         "ncli-core-configs": "file:lib/configs",
         "ncli-core-console": "file:lib/console",
         "ncli-core-files": "file:lib/files",
