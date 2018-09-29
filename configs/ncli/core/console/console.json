@@ -1,6 +1,5 @@
 {
     "blacklist": [
-        "*"
     ],
     "loggingMode": "package",
     "summary": [
@@ -9,7 +8,6 @@
     "thresholdCooldown": 150,
     "thresholdCount": 2,
     "whitelist": [
-        "ncli-core-helpers",
-        "ncli-core-scripts"
+        "*"
     ]
 }

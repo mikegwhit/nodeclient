@@ -27,14 +27,14 @@ const safeInstall = (dir) => {
     console.log(chalk.green('Safely Installed'), dir);
     process.chdir(cwd);
 }
-safeInstall(__dirname + '/../lib/core/rscandir');
-safeInstall(__dirname + '/../lib/core/files');
-safeInstall(__dirname + '/../lib/core/helpers');
-safeInstall(__dirname + '/../lib/core/configs');
-safeInstall(__dirname + '/../lib/core/cache');
-safeInstall(__dirname + '/../lib/core/logger');
-safeInstall(__dirname + '/../lib/core/console');
-safeInstall(__dirname + '/../lib/core/scripts');
+safeInstall(__dirname + '/../lib/rscandir');
+safeInstall(__dirname + '/../lib/files');
+safeInstall(__dirname + '/../lib/helpers');
+safeInstall(__dirname + '/../lib/configs');
+safeInstall(__dirname + '/../lib/cache');
+safeInstall(__dirname + '/../lib/logger');
+safeInstall(__dirname + '/../lib/console');
+safeInstall(__dirname + '/../lib/scripts');
 const packageJSON = 
     JSON.parse(require('fs').readFileSync(__dirname + '/../package.json'));
 packageJSON['dependencies'] = packageJSON['localDependencies'];
