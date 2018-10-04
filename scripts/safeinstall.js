@@ -8,7 +8,6 @@
 const cp = require('child_process');
 const fs = require('fs');
 const chalk = require('chalk');
-cp.execSync('chmod 777 -R .');
 
 const safeInstall = (dir) => {
     const cwd = process.cwd();
