@@ -1,6 +1,6 @@
 module.exports = {
-    configs: require('ncli-core-configs'),
-    files: require('ncli-core-files'),
-    logger: require('ncli-core-logger'),
-    rscandir: require('ncli-core-rscandir')
+    configs: require('lib/core/configs'),
+    files: require('lib/core/files'),
+    logger: require('lib/core/logger'),
+    rscandir: require('lib/core/rscandir')
 };
