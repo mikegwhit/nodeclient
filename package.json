@@ -15,7 +15,15 @@
     "readline": "^1.3.0",
     "minimatch": "^3.0.3",
     "scandir": "^0.1.2",
-    "minimist": "^1.2.0"
+    "minimist": "^1.2.0",
+    "ncli-core-cache": "file:lib/core/cache",
+    "ncli-core-configs": "file:lib/core/configs",
+    "ncli-core-console": "file:lib/core/console",
+    "ncli-core-files": "file:lib/core/files",
+    "ncli-core-helpers": "file:lib/core/helpers",
+    "ncli-core-logger": "file:lib/core/logger",
+    "ncli-core-rscandir": "file:lib/core/rscandir",
+    "ncli-core-scripts": "file:lib/core/scripts"
   },
   "localDependencies": {
     "ncli-core-cache": "file:lib/core/cache",
