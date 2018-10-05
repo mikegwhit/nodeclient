@@ -13,8 +13,9 @@ const safeInstall = (dir) => {
     const cwd = process.cwd();
     process.chdir(dir);
     console.log(chalk.cyan('Safely Installing'), dir);
-    try {fs.unlinkSync('./package-lock.json');} catch(e) {}
+    // fs.unlinkSync('./package-lock.json');} catch(e) {}
     try {
+        cp.execSync(`npm i ${dir} --save`);
         // cp.execSync('rm -rf node_modules', {encoding: 'utf8', stdio: 'ignore'});
     } catch(e) {
         console.log(chalk.red('Failure Occurred'), dir);
