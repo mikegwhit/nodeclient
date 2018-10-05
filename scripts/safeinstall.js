@@ -15,6 +15,7 @@ const safeInstall = (dir) => {
     console.log(chalk.cyan('Safely Installing'), dir);
     // fs.unlinkSync('./package-lock.json');} catch(e) {}
     try {
+        process.chdir(__dirname + '/../');
         cp.execSync(`npm i ${dir} --save`);
         // cp.execSync('rm -rf node_modules', {encoding: 'utf8', stdio: 'ignore'});
     } catch(e) {
