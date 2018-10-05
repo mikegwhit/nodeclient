@@ -15,12 +15,12 @@ const safeInstall = (dir) => {
     console.log(chalk.cyan('Safely Installing'), dir);
     try {fs.unlinkSync('./package-lock.json');} catch(e) {}
     try {
-        cp.execSync('rm -rf node_modules', {encoding: 'utf8', stdio: 'ignore'});
+        // cp.execSync('rm -rf node_modules', {encoding: 'utf8', stdio: 'ignore'});
     } catch(e) {
         console.log(chalk.red('Failure Occurred'), dir);
     }
     try {
-        cp.execSync('npm i', {encoding: 'utf8', stdio: 'ignore'});
+        // cp.execSync('npm i', {encoding: 'utf8', stdio: 'ignore'});
     } catch(e) {
         console.log(chalk.red('Failure Occurred'), dir);
     }
@@ -41,7 +41,9 @@ packageJSON['dependencies'] = packageJSON['localDependencies'];
 packageJSON['scripts'] = {
     'postinstall': 'node scripts/postinstall.js'
 };
+/*
 require('fs').writeFileSync(__dirname + '/../package.json', 
     JSON.stringify(packageJSON, null, 2));
 safeInstall(__dirname + '/../');
+*/
 process.exit();
