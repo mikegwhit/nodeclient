@@ -28,7 +28,11 @@ const installPackage = (dir) => {
             JSON.parse(require('fs').readFileSync(dir + '/package.json', 'utf8'));
         try {
             cp.exec(`npm i ${dir} --save`).on('close', () => {
-                require('fs').rmdirSync(`"${process.env['HOME']}/.node_modules/${pkgJSON['name']}"`);
+                try {
+                    require('fs')
+                        .rmdirSync(`"${process.env['HOME']}/.node_modules/` +
+                        `${pkgJSON['name']}"`);
+                } catch(e) {}
                 cp.exec(`ln -s "${require('path').resolve(dir)}" ` + 
                     `"${process.env['HOME']}/.node_modules/${pkgJSON['name']}"`, 
                     {encoding: 'utf8', stdio: 'ignore'}).on('close', () => {
