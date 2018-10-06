@@ -15,7 +15,6 @@ const safeInstall = (dir) => {
     console.log(chalk.cyan('Safely Installing'), dir);
     // fs.unlinkSync('./package-lock.json');} catch(e) {}
     try {
-        process.chdir(__dirname + '/../');
         cp.execSync(`npm i ${dir} --save`);
         // cp.execSync('rm -rf node_modules', {encoding: 'utf8', stdio: 'ignore'});
     } catch(e) {
@@ -43,9 +42,14 @@ packageJSON['dependencies'] = packageJSON['localDependencies'];
 packageJSON['scripts'] = {
     'postinstall': 'node scripts/postinstall.js'
 };
-/*
 require('fs').writeFileSync(__dirname + '/../package.json', 
     JSON.stringify(packageJSON, null, 2));
-safeInstall(__dirname + '/../');
-*/
+console.log('#########################', process.cwd());
+try {
+    require('ncli-core-files');
+    console.log('Success.');
+} catch(e) {
+
+}
+// safeInstall(__dirname + '/../');
 process.exit();
