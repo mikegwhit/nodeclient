@@ -33,6 +33,7 @@ const installPackage = (dir) => {
                         .rmdirSync(`"${process.env['HOME']}/.node_modules/` +
                         `${pkgJSON['name']}"`);
                 } catch(e) {}
+                console.log('Attempting to create symlink', pkgJSON['name']);
                 cp.exec(`ln -s "${require('path').resolve(dir)}" ` + 
                     `"${process.env['HOME']}/.node_modules/${pkgJSON['name']}"`, 
                     {encoding: 'utf8', stdio: 'ignore'}).on('close', () => {
@@ -58,9 +59,10 @@ let promises = [];
 if (!require('fs').existsSync(`${process.env['HOME']}/.node_modules`)) {
     require('fs').mkdirSync(`${process.env['HOME']}/.node_modules`);
 }
+console.log(chalk.cyan('Installing Nodeclient core'));
 packages.map((pkg) => {
     if (!progress) {
-        initProgress(packages.length, 'Installing nodeclient core');
+        initProgress(packages.length, '');
     }
     let packageName = pkg.split('/').pop();
     try {
@@ -71,7 +73,7 @@ packages.map((pkg) => {
     }
     let promise = installPackage(pkg);
     promise.then(() => {
-        progress.tick({label: ''});
+        progress.tick({label: packageName});
     });
     promises.push(installPackage(pkg));
 });
