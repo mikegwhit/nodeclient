@@ -25,7 +25,7 @@ const installPackage = (dir) => {
     process.chdir(dir);
     return new Promise((resolve, reject) => {
         const pkgJSON = 
-            JSON.parse(require('fs').readFileSync(pkg + '/package.json', 'utf8'));
+            JSON.parse(require('fs').readFileSync(dir + '/package.json', 'utf8'));
         try {
             cp.exec(`npm i ${dir} --save`).on('close', () => {
                 cp.exec(`ln -s "${require('path').resolve(__dirname + '/../')}" ` + 
