@@ -61,6 +61,7 @@ packages.map((pkg) => {
         packageName = pkgJSON['friendlyName'] || pkgJSON['name'];
     } catch(e) {
     }
+    console.log('Installing ', pkg)
     let promise = installPackage(pkg);
     promises.push(installPackage(pkg));
 });
@@ -77,7 +78,10 @@ require('fs').writeFileSync(__dirname + '/../package.json',
 // symlink the Nodeclient, and then each package directory.
 // safeInstall(__dirname + '/../');
 Promise.all(promises).then(() => {
-    cp.execSync(`ln -s "${require('path').resolve(__dirname + '/../')}" ` + 
-        `"$HOME/.node_modules/nodeclient"`)
+    try {
+        cp.execSync(`ln -s "${require('path').resolve(__dirname + '/../')}" ` + 
+            `"$HOME/.node_modules/nodeclient"`)
+    } catch(e) {
+    }
     process.exit();
 });
