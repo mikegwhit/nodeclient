@@ -78,6 +78,6 @@ require('fs').writeFileSync(__dirname + '/../package.json',
 // safeInstall(__dirname + '/../');
 Promise.all(promises).then(() => {
     cp.execSync(`ln -s "${require('path').resolve(__dirname + '/../')}" ` + 
-        `"$HOME/.node_modules/nodeclient}`)
+        `"$HOME/.node_modules/nodeclient"`)
     process.exit();
 });
