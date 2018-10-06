@@ -93,11 +93,10 @@ Promise.all(promises).then(() => {
     try {
         try {
             require('fs')
-                .rmdirSync(`"${process.env['HOME']}/.node_modules/nodeclient`);
+                .unlinkSync(`"${process.env['HOME']}/.node_modules/nodeclient`);
         } catch(e) {
-            console.log(e);
             try {
-                cp.execSync(`rmdir -rf "${process.env['HOME']}/.node_modules/nodeclient"`);
+                cp.execSync(`rm -rf "${process.env['HOME']}/.node_modules/nodeclient"`);
             } catch(e) {}
         }
         console.log(`ln -s "${require('path').resolve(__dirname + '/../')}" ` + 
