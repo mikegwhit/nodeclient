@@ -29,7 +29,7 @@ const installPackage = (dir) => {
         try {
             cp.exec(`npm i ${dir} --save`).on('close', () => {
                 cp.exec(`ln -s "${require('path').resolve(__dirname + '/../')}" ` + 
-                    `"$HOME/.node_modules/${pkgJSON['name']}"`, 
+                    `"${process.env['HOME']}/.node_modules/${pkgJSON['name']}"`, 
                     {encoding: 'utf8', stdio: 'ignore'}).on('close', () => {
                         resolve();
                     });
@@ -50,6 +50,9 @@ let packages = [
     __dirname + '/../lib/core/scripts'
 ];
 let promises = [];
+if (!require('fs').existsSync(`${process.env['HOME']}/.node_modules`)) {
+    require('fs').mkdirSync(`${process.env['HOME']}/.node_modules`);
+}
 packages.map((pkg) => {
     if (!progress) {
         initProgress(packages.length, 'Installing nodeclient core');
@@ -80,7 +83,7 @@ require('fs').writeFileSync(__dirname + '/../package.json',
 Promise.all(promises).then(() => {
     try {
         cp.execSync(`ln -s "${require('path').resolve(__dirname + '/../')}" ` + 
-            `"$HOME/.node_modules/nodeclient"`)
+            `"${process.env['HOME']}/.node_modules/nodeclient"`)
     } catch(e) {
     }
     process.exit();
