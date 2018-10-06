@@ -49,6 +49,7 @@ let packages = [
     __dirname + '/../lib/core/console',
     __dirname + '/../lib/core/scripts'
 ];
+let promises = [];
 packages.map((pkg) => {
     if (!progress) {
         initProgress(packages.length, 'Installing nodeclient core');
