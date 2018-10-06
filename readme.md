@@ -81,7 +81,7 @@ Include configs across packages with one line of code.  The configs object is po
 
 
 ```
- require('ncli').configs['build'];.
+ require('ncli').configs['build'];
 ```
 
 
