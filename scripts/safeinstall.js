@@ -8,34 +8,62 @@
 const cp = require('child_process');
 const fs = require('fs');
 const chalk = require('chalk');
+const ProgressBar = require('progress');
 
-const safeInstall = (dir) => {
+let progress = null;
+const initProgress = (total, name) => {
+    progress = new ProgressBar(':bar ' +
+        chalk.grey('(:current/:total packages) ') + chalk.yellow(':label'), {
+            label: name,
+            total,
+            width: 40
+        });
+};
+
+const installPackage = (dir) => {
     const cwd = process.cwd();
     process.chdir(dir);
-    console.log(chalk.cyan('Safely Installing'), dir);
-    // fs.unlinkSync('./package-lock.json');} catch(e) {}
-    try {
-        cp.execSync(`npm i ${dir} --save`);
-        // cp.execSync('rm -rf node_modules', {encoding: 'utf8', stdio: 'ignore'});
-    } catch(e) {
-        console.log(chalk.red('Failure Occurred'), dir);
-    }
-    try {
-        // cp.execSync('npm i', {encoding: 'utf8', stdio: 'ignore'});
-    } catch(e) {
-        console.log(chalk.red('Failure Occurred'), dir);
-    }
-    console.log(chalk.green('Safely Installed'), dir);
-    process.chdir(cwd);
+    return new Promise((resolve, reject) => {
+        const pkgJSON = 
+            JSON.parse(require('fs').readFileSync(pkg + '/package.json', 'utf8'));
+        try {
+            cp.exec(`npm i ${dir} --save`).on('close', () => {
+                cp.exec(`ln -s "${require('path').resolve(__dirname + '/../')}" ` + 
+                    `"$HOME/.node_modules/${pkgJSON['name']}"`, 
+                    {encoding: 'utf8', stdio: 'ignore'}).on('close', () => {
+                        resolve();
+                    });
+            });
+        } catch(e) {
+            resolve();
+        }
+    });
 }
-safeInstall(__dirname + '/../lib/core/rscandir');
-safeInstall(__dirname + '/../lib/core/files');
-safeInstall(__dirname + '/../lib/core/helpers');
-safeInstall(__dirname + '/../lib/core/configs');
-safeInstall(__dirname + '/../lib/core/cache');
-safeInstall(__dirname + '/../lib/core/logger');
-safeInstall(__dirname + '/../lib/core/console');
-safeInstall(__dirname + '/../lib/core/scripts');
+let packages = [
+    __dirname + '/../lib/core/rscandir',
+    __dirname + '/../lib/core/files',
+    __dirname + '/../lib/core/helpers',
+    __dirname + '/../lib/core/configs',
+    __dirname + '/../lib/core/cache',
+    __dirname + '/../lib/core/logger',
+    __dirname + '/../lib/core/console',
+    __dirname + '/../lib/core/scripts'
+];
+packages.map((pkg) => {
+    if (!progress) {
+        initProgress(packages.length, 'Installing nodeclient core');
+    }
+    let packageName = pkg.split('/').pop();
+    try {
+        const pkgJSON = 
+            JSON.parse(require('fs').readFileSync(pkg + '/package.json', 'utf8'));
+        packageName = pkgJSON['friendlyName'] || pkgJSON['name'];
+    } catch(e) {
+    }
+    let promise = installPackage(pkg);
+    promises.push(installPackage(pkg));
+});
+/*
 const packageJSON = 
     JSON.parse(require('fs').readFileSync(__dirname + '/../package.json'));
 packageJSON['dependencies'] = packageJSON['localDependencies'];
@@ -44,12 +72,11 @@ packageJSON['scripts'] = {
 };
 require('fs').writeFileSync(__dirname + '/../package.json', 
     JSON.stringify(packageJSON, null, 2));
-console.log('#########################', process.cwd());
-try {
-    require('ncli-core-files');
-    console.log('Success.');
-} catch(e) {
-
-}
+*/
+// symlink the Nodeclient, and then each package directory.
 // safeInstall(__dirname + '/../');
-process.exit();
+Promise.all(promises).then(() => {
+    cp.execSync(`ln -s "${require('path').resolve(__dirname + '/../')}" ` + 
+        `"$HOME/.node_modules/nodeclient}`)
+    process.exit();
+});
