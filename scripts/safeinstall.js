@@ -33,7 +33,6 @@ const installPackage = (dir) => {
                         .rmdirSync(`"${process.env['HOME']}/.node_modules/` +
                         `${pkgJSON['name']}"`);
                 } catch(e) {}
-                console.log('Attempting to create symlink', pkgJSON['name']);
                 cp.exec(`ln -s "${require('path').resolve(dir)}" ` + 
                     `"${process.env['HOME']}/.node_modules/${pkgJSON['name']}"`, 
                     {encoding: 'utf8', stdio: 'ignore'}).on('close', () => {
@@ -63,12 +62,13 @@ console.log(chalk.cyan('Installing Nodeclient core'));
 packages.map((pkg) => {
     if (!progress) {
         initProgress(packages.length, '');
+        progress.tick({label: ''});
     }
     let packageName = pkg.split('/').pop();
     try {
         const pkgJSON = 
             JSON.parse(require('fs').readFileSync(pkg + '/package.json', 'utf8'));
-        packageName = pkgJSON['friendlyName'] || pkgJSON['name'];
+        packageName = pkgJSON['name']; /* || pkgJSON['name']; */
     } catch(e) {
     }
     let promise = installPackage(pkg);
@@ -90,6 +90,7 @@ require('fs').writeFileSync(__dirname + '/../package.json',
 // symlink the Nodeclient, and then each package directory.
 // safeInstall(__dirname + '/../');
 Promise.all(promises).then(() => {
+    console.log('Success?');
     try {
         try {
             require('fs')
