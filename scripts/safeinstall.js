@@ -89,6 +89,10 @@ require('fs').writeFileSync(__dirname + '/../package.json',
 // safeInstall(__dirname + '/../');
 Promise.all(promises).then(() => {
     try {
+        try {
+            require('fs')
+                .rmdirSync(`"${process.env['HOME']}/.node_modules/nodeclient`);
+        } catch(e) {}
         cp.execSync(`ln -s "${require('path').resolve(__dirname + '/../')}" ` + 
             `"${process.env['HOME']}/.node_modules/nodeclient"`)
     } catch(e) {
