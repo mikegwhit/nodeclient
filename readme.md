@@ -130,7 +130,7 @@ In the above example, the build object represents the configs specified across t
 
 
 ```
- $ npm i ncli.
+ $ npm i ncli
 ```
 
 ### Bootstrap Local Packages
@@ -138,7 +138,7 @@ To utilize packages in your filesystem and treat them as node_modules, simply re
 
 
 ```
- require('ncli');.
+ require('ncli');
 ```
 
 
