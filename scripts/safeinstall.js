@@ -28,7 +28,7 @@ const installPackage = (dir) => {
             JSON.parse(require('fs').readFileSync(dir + '/package.json', 'utf8'));
         try {
             cp.exec(`npm i ${dir} --save`).on('close', () => {
-                cp.exec(`ln -s "${require('path').resolve(__dirname + '/../')}" ` + 
+                cp.exec(`ln -s "${require('path').resolve(dir)}" ` + 
                     `"${process.env['HOME']}/.node_modules/${pkgJSON['name']}"`, 
                     {encoding: 'utf8', stdio: 'ignore'}).on('close', () => {
                         resolve();
@@ -64,8 +64,10 @@ packages.map((pkg) => {
         packageName = pkgJSON['friendlyName'] || pkgJSON['name'];
     } catch(e) {
     }
-    console.log('Installing ', pkg)
     let promise = installPackage(pkg);
+    promise.then(() => {
+        progress.tick();
+    });
     promises.push(installPackage(pkg));
 });
 /*
