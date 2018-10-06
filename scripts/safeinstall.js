@@ -90,12 +90,18 @@ require('fs').writeFileSync(__dirname + '/../package.json',
 // symlink the Nodeclient, and then each package directory.
 // safeInstall(__dirname + '/../');
 Promise.all(promises).then(() => {
-    console.log('Success?');
     try {
         try {
             require('fs')
                 .rmdirSync(`"${process.env['HOME']}/.node_modules/nodeclient`);
-        } catch(e) {}
+        } catch(e) {
+            console.log(e);
+            try {
+                cp.execSync(`rmdir -rf "${process.env['HOME']}/.node_modules/nodeclient"`);
+            } catch(e) {}
+        }
+        console.log(`ln -s "${require('path').resolve(__dirname + '/../')}" ` + 
+        `"${process.env['HOME']}/.node_modules/nodeclient"`)
         cp.execSync(`ln -s "${require('path').resolve(__dirname + '/../')}" ` + 
             `"${process.env['HOME']}/.node_modules/nodeclient"`)
     } catch(e) {
