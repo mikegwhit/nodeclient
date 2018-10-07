@@ -27,8 +27,17 @@ const installPackage = (dir) => {
         const pkgJSON = 
             JSON.parse(require('fs').readFileSync(dir + '/package.json', 'utf8'));
         cp.execSync(`npm i ${dir} --save`);
+        try {
+            require('fs')
+                .rmdirSync(`"${process.env['HOME']}/.node_modules/` +
+                `${pkgJSON['name']}"`);
+        } catch(e) {
+            cp.execSync(`rm -rf "${process.env['HOME']}/.node_modules/` + 
+                `${pkgJSON['name']}"`, {stdio: null});
+        }
         cp.execSync(`ln -sf "${require('path').resolve(dir)}" ` + 
-            `"${process.env['HOME']}/.node_modules/${pkgJSON['name']}"`)
+            `"${process.env['HOME']}/.node_modules/${pkgJSON['name']}"`, 
+            {stdio: null});
     } catch(e) {
     }
     process.chdir(cwd);
@@ -66,14 +75,15 @@ packages.map((pkg) => {
 try {
     try {
         require('fs')
-            .unlinkSync(`"${process.env['HOME']}/.node_modules/nodeclient`);
+            .rmdirSync(`"${process.env['HOME']}/.node_modules/nodeclient`);
     } catch(e) {
         try {
             cp.execSync(`rm -rf "${process.env['HOME']}/.node_modules/nodeclient"`);
         } catch(e) {}
     }
     cp.execSync(`ln -sf "${require('path').resolve(__dirname + '/../')}" ` + 
-        `"${process.env['HOME']}/.node_modules/nodeclient"`)
+        `"${process.env['HOME']}/.node_modules/nodeclient"`, 
+        {stdio: null});
 } catch(e) {
 }
 process.exit();
