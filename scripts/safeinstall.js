@@ -13,7 +13,7 @@ const ProgressBar = require('progress');
 let progress = null;
 const initProgress = (total, name) => {
     progress = new ProgressBar(':bar ' +
-        chalk.grey('(:current/:total packages) ') + chalk.yellow(':label'), {
+        chalk.grey('(:current/:total packages) ') + chalk.cyan(':label'), {
             label: name,
             total,
             width: 40
@@ -23,28 +23,15 @@ const initProgress = (total, name) => {
 const installPackage = (dir) => {
     const cwd = process.cwd();
     process.chdir(dir);
-    return new Promise((resolve, reject) => {
+    try {
         const pkgJSON = 
             JSON.parse(require('fs').readFileSync(dir + '/package.json', 'utf8'));
-        try {
-            cp.exec(`npm i ${dir} --save`).on('close', () => {
-                try {
-                    require('fs')
-                        .rmdirSync(`"${process.env['HOME']}/.node_modules/` +
-                        `${pkgJSON['name']}"`);
-                } catch(e) {}
-                console.log(`ln -s "${require('path').resolve(dir)}" ` + 
-                    `"${process.env['HOME']}/.node_modules/${pkgJSON['name']}"`);
-                cp.exec(`ln -s "${require('path').resolve(dir)}" ` + 
-                    `"${process.env['HOME']}/.node_modules/${pkgJSON['name']}"`, 
-                    {encoding: 'utf8', stdio: 'ignore'}).on('close', () => {
-                        resolve();
-                    });
-            });
-        } catch(e) {
-            resolve();
-        }
-    });
+        cp.execSync(`npm i ${dir} --save`);
+        cp.execSync(`ln -sf "${require('path').resolve(dir)}" ` + 
+            `"${process.env['HOME']}/.node_modules/${pkgJSON['name']}"`)
+    } catch(e) {
+    }
+    process.chdir(cwd);
 }
 let packages = [
     __dirname + '/../lib/core/rscandir',
@@ -60,7 +47,7 @@ let promises = [];
 if (!require('fs').existsSync(`${process.env['HOME']}/.node_modules`)) {
     require('fs').mkdirSync(`${process.env['HOME']}/.node_modules`);
 }
-console.log(chalk.cyan('Installing Nodeclient core'));
+console.log(chalk.red('Installing Nodeclient core'));
 packages.map((pkg) => {
     if (!progress) {
         initProgress(packages.length, '');
@@ -72,26 +59,21 @@ packages.map((pkg) => {
         packageName = pkgJSON['name']; /* || pkgJSON['name']; */
     } catch(e) {
     }
-    let promise = installPackage(pkg);
-    promise.then(() => {
-        progress.tick({label: packageName});
-    });
-    promises.push(installPackage(pkg));
+    installPackage(pkg);
+    progress.tick({label: packageName});
 });
 
-Promise.all(promises).then(() => {
+try {
     try {
-        try {
-            require('fs')
-                .unlinkSync(`"${process.env['HOME']}/.node_modules/nodeclient`);
-        } catch(e) {
-            try {
-                cp.execSync(`rm -rf "${process.env['HOME']}/.node_modules/nodeclient"`);
-            } catch(e) {}
-        }
-        cp.execSync(`ln -s "${require('path').resolve(__dirname + '/../')}" ` + 
-            `"${process.env['HOME']}/.node_modules/nodeclient"`)
+        require('fs')
+            .unlinkSync(`"${process.env['HOME']}/.node_modules/nodeclient`);
     } catch(e) {
+        try {
+            cp.execSync(`rm -rf "${process.env['HOME']}/.node_modules/nodeclient"`);
+        } catch(e) {}
     }
-    process.exit();
-});
+    cp.execSync(`ln -sf "${require('path').resolve(__dirname + '/../')}" ` + 
+        `"${process.env['HOME']}/.node_modules/nodeclient"`)
+} catch(e) {
+}
+process.exit();
