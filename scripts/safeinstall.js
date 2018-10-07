@@ -62,7 +62,6 @@ console.log(chalk.cyan('Installing Nodeclient core'));
 packages.map((pkg) => {
     if (!progress) {
         initProgress(packages.length, '');
-        progress.tick({label: ''});
     }
     let packageName = pkg.split('/').pop();
     try {
@@ -99,8 +98,6 @@ Promise.all(promises).then(() => {
                 cp.execSync(`rm -rf "${process.env['HOME']}/.node_modules/nodeclient"`);
             } catch(e) {}
         }
-        console.log(`ln -s "${require('path').resolve(__dirname + '/../')}" ` + 
-        `"${process.env['HOME']}/.node_modules/nodeclient"`)
         cp.execSync(`ln -s "${require('path').resolve(__dirname + '/../')}" ` + 
             `"${process.env['HOME']}/.node_modules/nodeclient"`)
     } catch(e) {
