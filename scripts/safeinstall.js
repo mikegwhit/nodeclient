@@ -33,6 +33,8 @@ const installPackage = (dir) => {
                         .rmdirSync(`"${process.env['HOME']}/.node_modules/` +
                         `${pkgJSON['name']}"`);
                 } catch(e) {}
+                console.log(`ln -s "${require('path').resolve(dir)}" ` + 
+                    `"${process.env['HOME']}/.node_modules/${pkgJSON['name']}"`);
                 cp.exec(`ln -s "${require('path').resolve(dir)}" ` + 
                     `"${process.env['HOME']}/.node_modules/${pkgJSON['name']}"`, 
                     {encoding: 'utf8', stdio: 'ignore'}).on('close', () => {
@@ -76,18 +78,7 @@ packages.map((pkg) => {
     });
     promises.push(installPackage(pkg));
 });
-/*
-const packageJSON = 
-    JSON.parse(require('fs').readFileSync(__dirname + '/../package.json'));
-packageJSON['dependencies'] = packageJSON['localDependencies'];
-packageJSON['scripts'] = {
-    'postinstall': 'node scripts/postinstall.js'
-};
-require('fs').writeFileSync(__dirname + '/../package.json', 
-    JSON.stringify(packageJSON, null, 2));
-*/
-// symlink the Nodeclient, and then each package directory.
-// safeInstall(__dirname + '/../');
+
 Promise.all(promises).then(() => {
     try {
         try {
