@@ -95,7 +95,7 @@ console.log(chalk.cyan('Installing Nodeclient Core'));
         progress.tick({label: packageName});
         await installPackage(pkg);
     }
-    progress.tick(chalk.green('Done'));
+    progress.tick({label: chalk.green('Done')});
     try {
         // Remove the Nodeclient libraries first.
         try {
