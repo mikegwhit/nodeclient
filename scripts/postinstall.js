@@ -67,9 +67,9 @@ let packages = [
     __dirname + '/../lib/core/helpers',
     __dirname + '/../lib/core/configs',
     __dirname + '/../lib/core/cache',
-    __dirname + '/../lib/core/logger',
+    __dirname + '/../lib/core/logger'/*,
     __dirname + '/../lib/core/console',
-    __dirname + '/../lib/core/scripts'
+    __dirname + '/../lib/core/scripts'*/
 ];
 let promises = [];
 
