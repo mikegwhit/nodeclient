@@ -40,7 +40,10 @@ const installPackage = (dir) => {
                             resolve();
                         });
                 } else {
-                    cp.execSync(`cmd <<< mklink /D "~/.node_modules/${pkgJSON['name']}" "$(npm config get prefix)/node_modules/${pkgJSON['name']}"`)
+                    const prefix = cp.execSync(`echo $(npm config get prefix)`);
+                    const home = cp.execSync(`echo $HOME`);
+                    console.log(`cmd <<< mklink /D "${home}/.node_modules/${pkgJSON['name']}" "${prefix}/node_modules/${pkgJSON['name']}"`);
+                    cp.execSync(`cmd <<< mklink /D "${home}/.node_modules/nodeclient" "${prefix}/node_modules/nodeclient"`);
                 }
                 
             });
@@ -67,23 +70,22 @@ if (!require('fs').existsSync(`${process.env['HOME']}/.node_modules`)) {
 
 console.log(chalk.cyan('Installing Nodeclient core'));
 packages.map((pkg) => {
-    if (!progress) {
-        initProgress(packages.length, '');
-    }
     let packageName = pkg.split('/').pop();
     try {
         const pkgJSON = 
             JSON.parse(require('fs').readFileSync(pkg + '/package.json', 'utf8'));
-        packageName = pkgJSON['name']; /* || pkgJSON['name']; */
+        packageName = pkgJSON['name'];
     } catch(e) {
     }
-    let promise = installPackage(pkg);
-    promise.then(() => {
-        progress.tick({label: packageName});
-    });
+    if (!progress) {
+        initProgress(packages.length, '');
+    }
+    progress.tick({label: packageName});
+
     promises.push(installPackage(pkg));
 });
 Promise.all(promises).then(() => {
+    progress.tick({label: chalk.green('Done')});
     try {
         // Remove the Nodeclient libraries first.
         try {
@@ -98,7 +100,10 @@ Promise.all(promises).then(() => {
             cp.execSync(`ln -s "${require('path').resolve(__dirname + '/../')}" ` + 
                 `"${process.env['HOME']}/.node_modules/nodeclient"`)
         } else {
-            cp.execSync(`cmd <<< mklink /D "~/.node_modules/nodeclient" "$(npm config get prefix)/node_modules/nodeclient"`)
+            const prefix = cp.execSync(`echo $(npm config get prefix)`);
+            const home = cp.execSync(`echo $HOME`);
+            console.log(`cmd <<< mklink /D "${home}/.node_modules/nodeclient" "${prefix}/node_modules/nodeclient"`);
+            cp.execSync(`cmd <<< mklink /D "${home}/.node_modules/nodeclient" "${prefix}/node_modules/nodeclient"`);
         }
     } catch(e) {
     }
