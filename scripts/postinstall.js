@@ -40,10 +40,10 @@ const installPackage = (dir) => {
                             resolve();
                         });
                 } else {
-                    const prefix = cp.execSync(`echo $(npm config get prefix)`);
-                    const home = cp.execSync(`echo $HOME`);
-                    console.log(`cmd <<< mklink /D "${home}/.node_modules/${pkgJSON['name']}" "${prefix}/node_modules/${pkgJSON['name']}"`);
-                    cp.execSync(`cmd <<< mklink /D "${home}/.node_modules/nodeclient" "${prefix}/node_modules/nodeclient"`);
+                    const prefix = cp.execSync(`npm config get prefix`).trim().replace(/\\/g, '/');
+                    const home = cp.execSync(`echo $HOMEPATH`).trim().replace(/\\/g, '/');
+                    console.log(`cmd <<< 'mklink /D "${home}/.node_modules/${pkgJSON['name']}" "${prefix}/node_modules/${pkgJSON['name']}"'`);
+                    cp.execSync(`cmd <<< 'mklink /D "${home}/.node_modules/${pkgJSON['name']}" "${prefix}/node_modules/${pkgJSON['name']}"'`);
                 }
                 
             });
@@ -79,8 +79,13 @@ packages.map((pkg) => {
     }
     if (!progress) {
         initProgress(packages.length, '');
+        progress.tick({label: packageName});
+    } else {
+        const promise = installPackage(pkg);
+        promise.then(() => {
+            progress.tick({label: packageName});
+        });
     }
-    progress.tick({label: packageName});
 
     promises.push(installPackage(pkg));
 });
@@ -100,10 +105,10 @@ Promise.all(promises).then(() => {
             cp.execSync(`ln -s "${require('path').resolve(__dirname + '/../')}" ` + 
                 `"${process.env['HOME']}/.node_modules/nodeclient"`)
         } else {
-            const prefix = cp.execSync(`echo $(npm config get prefix)`);
-            const home = cp.execSync(`echo $HOME`);
-            console.log(`cmd <<< mklink /D "${home}/.node_modules/nodeclient" "${prefix}/node_modules/nodeclient"`);
-            cp.execSync(`cmd <<< mklink /D "${home}/.node_modules/nodeclient" "${prefix}/node_modules/nodeclient"`);
+            const prefix = cp.execSync(`npm config get prefix`).trim().replace(/\\/g, '/');
+            const home = cp.execSync(`echo $HOMEPATH`).trim().replace(/\\/g, '/');
+            console.log(`cmd <<< 'mklink /D "${home}/.node_modules/nodeclient" "${prefix}/node_modules/nodeclient"'`);
+            cp.execSync(`cmd <<< 'mklink /D "${home}/.node_modules/nodeclient" "${prefix}/node_modules/nodeclient"'`);
         }
     } catch(e) {
     }
