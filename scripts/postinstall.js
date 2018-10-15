@@ -40,7 +40,7 @@ const installPackage = (dir) => {
                             resolve();
                         });
                 } else {
-                    cp.execSync(`cmd <<< "mklink /D \\"~/.node_modules/${pkgJSON['name']}\\" \\"$(npm config get prefix)/node_modules/${pkgJSON['name']}\\"`)
+                    cp.execSync(`cmd <<< mklink /D "~/.node_modules/${pkgJSON['name']}" "$(npm config get prefix)/node_modules/${pkgJSON['name']}"`)
                 }
                 
             });
@@ -69,7 +69,6 @@ console.log(chalk.cyan('Installing Nodeclient core'));
 packages.map((pkg) => {
     if (!progress) {
         initProgress(packages.length, '');
-        progress.tick({label: ''});
     }
     let packageName = pkg.split('/').pop();
     try {
@@ -99,7 +98,7 @@ Promise.all(promises).then(() => {
             cp.execSync(`ln -s "${require('path').resolve(__dirname + '/../')}" ` + 
                 `"${process.env['HOME']}/.node_modules/nodeclient"`)
         } else {
-            cp.execSync(`cmd <<< "mklink /D \\"~/.node_modules/nodeclient\\" \\"$(npm config get prefix)/node_modules/nodeclient\\"`)
+            cp.execSync(`cmd <<< mklink /D "~/.node_modules/nodeclient" "$(npm config get prefix)/node_modules/nodeclient"`)
         }
     } catch(e) {
     }
