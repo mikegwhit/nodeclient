@@ -91,7 +91,6 @@ packages.map((pkg) => {
     promises.push(promise);
 });
 Promise.all(promises).then(() => {
-    progress.tick({label: chalk.green('Done')});
     try {
         // Remove the Nodeclient libraries first.
         try {
