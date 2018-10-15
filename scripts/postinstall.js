@@ -42,7 +42,10 @@ const installPackage = (dir) => {
                 } else {
                     const prefix = (new Buffer(cp.execSync(`npm config get prefix`)).toString('utf8')).trim().replace(/\\/g, '/');
                     const home = (new Buffer(cp.execSync(`echo %HOMEPATH%`)).toString('utf8')).trim().replace(/\\/g, '/');
-                    try {cp.execSync(`rmdir "${home}/.node_modules/${pkgJSON['name']}"`);} catch(e) {}
+                    try {
+                        cp.execSync(`rmdir "${home}/.node_modules/${pkgJSON['name']}"`,
+                            {encoding: 'utf8', stdio: 'ignore'});
+                    } catch(e) {}
                     cp.execSync(`mklink /D "${home}/.node_modules/${pkgJSON['name']}" "${prefix}/node_modules/${pkgJSON['name']}"`);
                     resolve();
                 }
@@ -80,16 +83,12 @@ packages.map((pkg) => {
     }
     if (!progress) {
         initProgress(packages.length, '');
-        progress.tick({label: packageName});
-        promises.push(installPackage(pkg));
-    } else {
-        const promise = installPackage(pkg);
-        promise.then(() => {
-            progress.tick({label: packageName});
-        });
-        promises.push(promise);
     }
-
+    const promise = installPackage(pkg);
+    promise.then(() => {
+        progress.tick({label: packageName});
+    });
+    promises.push(promise);
 });
 Promise.all(promises).then(() => {
     progress.tick({label: chalk.green('Done')});
@@ -109,7 +108,10 @@ Promise.all(promises).then(() => {
         } else {
             const prefix = (new Buffer(cp.execSync(`npm config get prefix`)).toString('utf8')).trim().replace(/\\/g, '/');
             const home = (new Buffer(cp.execSync(`echo %HOMEPATH%`)).toString('utf8')).trim().replace(/\\/g, '/');
-            try {cp.execSync(`rmdir "${home}/.node_modules/nodeclient"`);} catch(e) {}
+            try {
+                cp.execSync(`rmdir "${home}/.node_modules/nodeclient"`,
+                    {encoding: 'utf8', stdio: 'ignore'});
+            } catch(e) {}
             cp.execSync(`mklink /D "${home}/.node_modules/nodeclient" "${prefix}/node_modules/nodeclient"`);
         }
     } catch(e) {
