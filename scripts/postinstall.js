@@ -29,22 +29,25 @@ const installPackage = (dir) => {
         try {
             cp.exec(`npm i ${dir} --save`, {
                 stdio: 'inherit'
-            }).on('error', (err) => {
-                // console.error(`An error occurred installing ${pkgJSON['name']}, ${err}`);
-            }).on('close', () => {
-                // console.info(`Successfully installed ${pkgJSON['name']}`);
+            }).on('close', (code) => {
+                if (code != 0) {
+                    console.error(`An ${chalk.red(`error`)} occurred installing ${pkgJSON['name']}, error code: ${code}`);
+                }
                 try {
+                    // Attempt to remove any existing symlinks.
                     require('fs')
                         .rmdirSync(`"${process.env['HOME']}/.node_modules/` +
                         `${pkgJSON['name']}"`);
                 } catch(e) {}
                 if (process.platform != 'win32') {
+                    // Just a simple symlink will do for Mac/Linux.
                     cp.exec(`ln -s "${require('path').resolve(dir)}" ` + 
                         `"${process.env['HOME']}/.node_modules/${pkgJSON['name']}"`, 
                         {encoding: 'utf8', stdio: 'ignore'}).on('close', () => {
                             resolve();
                         });
                 } else {
+                    // Otherwise, need to set up and use Windows' mklink.
                     const prefix = (new Buffer(cp.execSync(`npm config get prefix`)).toString('utf8')).trim().replace(/\\/g, '/');
                     const home = (new Buffer(cp.execSync(`echo %HOMEPATH%`)).toString('utf8')).trim().replace(/\\/g, '/');
                     try {
@@ -54,7 +57,6 @@ const installPackage = (dir) => {
                     cp.execSync(`mklink /D "${home}/.node_modules/${pkgJSON['name']}" "${prefix}/node_modules/${pkgJSON['name']}"`);
                     resolve();
                 }
-                
             });
         } catch(e) {
             resolve();
@@ -66,8 +68,8 @@ let packages = [
     __dirname + '/../lib/core/files',
     __dirname + '/../lib/core/helpers',
     __dirname + '/../lib/core/configs',
-    __dirname + '/../lib/core/cache',
-    __dirname + '/../lib/core/logger'/*,
+    __dirname + '/../lib/core/cache'/*,
+    __dirname + '/../lib/core/logger',
     __dirname + '/../lib/core/console',
     __dirname + '/../lib/core/scripts'*/
 ];
@@ -77,25 +79,23 @@ if (!require('fs').existsSync(`${process.env['HOME']}/.node_modules`)) {
     require('fs').mkdirSync(`${process.env['HOME']}/.node_modules`);
 }
 
-console.log(chalk.cyan('Installing Nodeclient core'));
-packages.map((pkg) => {
-    let packageName = pkg.split('/').pop();
-    try {
-        const pkgJSON = 
-            JSON.parse(require('fs').readFileSync(pkg + '/package.json', 'utf8'));
-        packageName = pkgJSON['name'];
-    } catch(e) {
-    }
-    if (!progress) {
-        initProgress(packages.length, '');
-    }
-    const promise = installPackage(pkg);
-    promise.then(() => {
+console.log(chalk.cyan('Installing Nodeclient Core'));
+(async () => {
+    for (let pkg of packages) {
+        let packageName = pkg.split('/').pop();
+        try {
+            const pkgJSON = 
+                JSON.parse(require('fs').readFileSync(pkg + '/package.json', 'utf8'));
+            packageName = pkgJSON['name'];
+        } catch(e) {
+        }
+        if (!progress) {
+            initProgress(packages.length + 1, '');
+        }
         progress.tick({label: packageName});
-    });
-    promises.push(promise);
-});
-Promise.all(promises).then(() => {
+        await installPackage(pkg);
+    }
+    progress.tick(chalk.green('Done'));
     try {
         // Remove the Nodeclient libraries first.
         try {
@@ -103,13 +103,16 @@ Promise.all(promises).then(() => {
                 .unlinkSync(`"${process.env['HOME']}/.node_modules/nodeclient`);
         } catch(e) {
             try {
+                // Use this as a fallback.
                 cp.execSync(`rm -rf "${process.env['HOME']}/.node_modules/nodeclient"`);
             } catch(e) {}
         }
         if (process.platform != 'win32') {
+            // If not on windows, a simple symlink will do.
             cp.execSync(`ln -s "${require('path').resolve(__dirname + '/../')}" ` + 
                 `"${process.env['HOME']}/.node_modules/nodeclient"`)
         } else {
+            // Else we'll need to execute a Windows mklink.
             const prefix = (new Buffer(cp.execSync(`npm config get prefix`)).toString('utf8')).trim().replace(/\\/g, '/');
             const home = (new Buffer(cp.execSync(`echo %HOMEPATH%`)).toString('utf8')).trim().replace(/\\/g, '/');
             try {
@@ -121,4 +124,4 @@ Promise.all(promises).then(() => {
     } catch(e) {
     }
     process.exit();
-});
+})();
