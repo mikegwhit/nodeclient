@@ -109,7 +109,7 @@ Promise.all(promises).then(() => {
         } else {
             const prefix = (new Buffer(cp.execSync(`npm config get prefix`)).toString('utf8')).trim().replace(/\\/g, '/');
             const home = (new Buffer(cp.execSync(`echo %HOMEPATH%`)).toString('utf8')).trim().replace(/\\/g, '/');
-            cp.execSync(`rm -rf "${home}/.node_modules/${pkgJSON['name']}"`);
+            cp.execSync(`rm -rf "${home}/.node_modules/nodeclient"`);
             cp.execSync(`mklink /D "${home}/.node_modules/nodeclient" "${prefix}/node_modules/nodeclient"`);
         }
     } catch(e) {
