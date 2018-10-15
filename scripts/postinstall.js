@@ -27,7 +27,12 @@ const installPackage = (dir) => {
         const pkgJSON = 
             JSON.parse(require('fs').readFileSync(dir + '/package.json', 'utf8'));
         try {
-            cp.exec(`npm i ${dir} --save`).on('close', () => {
+            cp.exec(`npm i ${dir} --save`, {
+                stdio: 'inherit'
+            }).on('error', (err) => {
+                console.error(`An error occurred installing ${pkgJSON['name']}, ${err}`);
+            }).on('close', () => {
+                console.info(`Successfully installed ${pkgJSON['name']}`);
                 try {
                     require('fs')
                         .rmdirSync(`"${process.env['HOME']}/.node_modules/` +
