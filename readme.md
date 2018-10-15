@@ -3,6 +3,34 @@
 nodeclient (NCLI) assists developers with managing multiple Node.js packages in an application ecosystem.  With NCLI, you can readily call scripts and manage configurations.
 
 
+## Installation
+
+```
+ $ npm i -g nodeclient
+```
+
+### Note: Global Install Forced
+Note that if you do not install Nodeclient globally, Nodeclient will move itself
+to your global folder on first run.  On first run, Nodeclient will copy itself
+to your `$(npm config get prefix)` OS-specific folder:
+
+* Mac/Linux: `$(npm config get prefix)/lib/node_modules`
+* Windows: `$(npm config get prefix)/node_modules`
+
+This choice was made because Nodeclient includes a `bin` script.
+
+### Note: One-Time Install
+Nodeclient links itself in your `~/.node_modules` folder such that you can
+always `require('nodeclient')` from within your code.  Note that 
+`~/.node_modules` is in the lookup paths of `require('module').globalPaths`.
+
+This choice was made because Nodeclient takes more than a minute to install.  
+This way, you only need to install Nodeclient once.
+
+### Windows Pre-Requisite
+You'll need to install the [Windows Subsystem for Linux](https://docs.microsoft.com/en-us/windows/wsl/install-win10).  This allows you
+to run bash in a Windows environment, and it's used by NCLI during install.
+
 ## Rationale
 
 It's difficult to manage large Node.js projects.  Developers typically discover a single Git repository is more valuable than many NPM packages.  Developers become confused about the purpose of a Node.js package.  Lerna is one of a small number of packages that help utilize the Node.js filesystem for large projects.  However, Lerna has a learning curve.  Developers understand that packages are an option for segmenting large projects but are left without a tool to truly leverage the Node.js filesystem.
@@ -123,15 +151,6 @@ In the above example, the build object represents the configs specified across t
    </td>
   </tr>
 </table>
-
-
-
-## Installation
-
-
-```
- $ npm i ncli
-```
 
 ### Bootstrap Local Packages
 To utilize packages in your filesystem and treat them as node_modules, simply require the NCLI package from your code:

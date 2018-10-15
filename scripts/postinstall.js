@@ -40,10 +40,7 @@ const installPackage = (dir) => {
                             resolve();
                         });
                 } else {
-                    const prefix = cp.execSync(`cmd /k "npm config get prefix"`);
-                    const home = cp.execSync(`cmd /k "echo %HOMEPATH%"`);
-                    console.log(`cmd /k "mklink /D \\"${home}/.node_modules/${pkgJSON['name']}\\" \\"${prefix}/node_modules/${pkgJSON['name']}\\"`)
-                    cp.execSync(`cmd /k "mklink /D \\"${home}/.node_modules/${pkgJSON['name']}\\" \\"${prefix}/node_modules/${pkgJSON['name']}\\"`)
+                    cp.execSync(`cmd <<< "mklink /D \\"~/.node_modules/${pkgJSON['name']}\\" \\"$(npm config get prefix)/node_modules/${pkgJSON['name']}\\"`)
                 }
                 
             });
@@ -102,10 +99,7 @@ Promise.all(promises).then(() => {
             cp.execSync(`ln -s "${require('path').resolve(__dirname + '/../')}" ` + 
                 `"${process.env['HOME']}/.node_modules/nodeclient"`)
         } else {
-            const prefix = cp.execSync(`cmd /k "npm config get prefix"`);
-            const home = cp.execSync(`cmd /k "echo %HOMEPATH%"`);
-            console.log(`cmd /k "mklink /D \\"${home}/.node_modules/nodeclient\\" \\"${prefix}/node_modules/nodeclient\\"`);
-            cp.execSync(`cmd /k "mklink /D \\"${home}/.node_modules/nodeclient\\" \\"${prefix}/node_modules/nodeclient\\"`)
+            cp.execSync(`cmd <<< "mklink /D \\"~/.node_modules/nodeclient\\" \\"$(npm config get prefix)/node_modules/nodeclient\\"`)
         }
     } catch(e) {
     }
