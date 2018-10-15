@@ -30,9 +30,9 @@ const installPackage = (dir) => {
             cp.exec(`npm i ${dir} --save`, {
                 stdio: 'inherit'
             }).on('error', (err) => {
-                console.error(`An error occurred installing ${pkgJSON['name']}, ${err}`);
+                // console.error(`An error occurred installing ${pkgJSON['name']}, ${err}`);
             }).on('close', () => {
-                console.info(`Successfully installed ${pkgJSON['name']}`);
+                // console.info(`Successfully installed ${pkgJSON['name']}`);
                 try {
                     require('fs')
                         .rmdirSync(`"${process.env['HOME']}/.node_modules/` +
