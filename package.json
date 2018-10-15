@@ -28,7 +28,7 @@
     "ncli-core-scripts": "file:lib/core/scripts"
   },
   "scripts": {
-    "postinstall": "node scripts/safeinstall.js"
+    "postinstall": "node scripts/postinstall.js"
   },
   "flattenedDependencies": [
     "ncli-core-rscandir",
