@@ -43,7 +43,7 @@ const installPackage = (dir) => {
                     const prefix = (new Buffer(cp.execSync(`npm config get prefix`)).toString('utf8')).trim().replace(/\\/g, '/');
                     const home = (new Buffer(cp.execSync(`echo %HOMEPATH%`)).toString('utf8')).trim().replace(/\\/g, '/');
                     cp.execSync(`mklink /D "${home}/.node_modules/${pkgJSON['name']}" "${prefix}/node_modules/${pkgJSON['name']}"`);
-                    reoslve();
+                    resolve();
                 }
                 
             });
