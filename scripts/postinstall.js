@@ -42,6 +42,7 @@ const installPackage = (dir) => {
                 } else {
                     const prefix = cp.execSync(`cmd /k "npm config get prefix"`);
                     const home = cp.execSync(`cmd /k "echo %HOMEPATH%"`);
+                    console.log(`cmd /k "mklink /D \"${home}/.node_modules/${pkgJSON['name']}\" \"${prefix}/node_modules/${pkgJSON['name']}\"`)
                     cp.execSync(`cmd /k "mklink /D \"${home}/.node_modules/${pkgJSON['name']}\" \"${prefix}/node_modules/${pkgJSON['name']}\"`)
                 }
                 
@@ -103,6 +104,7 @@ Promise.all(promises).then(() => {
         } else {
             const prefix = cp.execSync(`cmd /k "npm config get prefix"`);
             const home = cp.execSync(`cmd /k "echo %HOMEPATH%"`);
+            console.log(`cmd /k "mklink /D \"${home}/.node_modules/nodeclient\" \"${prefix}/node_modules/nodeclient\"`);
             cp.execSync(`cmd /k "mklink /D \"${home}/.node_modules/nodeclient\" \"${prefix}/node_modules/nodeclient\"`)
         }
     } catch(e) {
